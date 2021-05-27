@@ -10,7 +10,7 @@ defmodule MultiDict do
   end
 end
 
-defmodule TodoList dog
+defmodule TodoList do
   def new(), do: MultiDict.new()
 
   def add_entry(list, date, item) do

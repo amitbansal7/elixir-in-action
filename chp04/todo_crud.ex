@@ -1,11 +1,11 @@
+require Logger
+
 defmodule TodoList do
   defstruct auto_id: 1, entries: %{}
 
-  def new(), do: %TodoList{}
-
   def new(entries \\ []) do
     entries
-    |> Enum.reduce(TodoList.new(), fn entry, acc -> add_entry(acc, entry) end)
+    |> Enum.reduce(%TodoList{}, fn entry, acc -> add_entry(acc, entry) end)
   end
 
   def add_entry(todo_list, entry) do
@@ -55,3 +55,13 @@ defmodule TodoList do
     end) |> elem(1)
   end
 end
+
+entries = [
+  %{date: ~D[2018-12-19], title: "Dentist"},
+  %{date: ~D[2018-12-20], title: "Shopping"},
+  %{date: ~D[2018-12-19], title: "Movies"}
+]
+list = TodoList.new(entries)
+list = TodoList.add_entry(list, %{date: ~D[2018-12-21], title: "Elixir"})
+list |> inspect() |> Logger.debug()
+TodoList.delete_entry(list, fn entry -> entry.date == ~D[2018-12-19] end) |> inspect() |> Logger.debug()

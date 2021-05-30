@@ -1,5 +1,4 @@
 defmodule TodoList do
-
   def new(), do: %{}
 
   def add_entry(todo_list, date, title) do

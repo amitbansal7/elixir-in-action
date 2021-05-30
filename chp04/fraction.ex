@@ -6,7 +6,7 @@ defmodule Fraction do
   end
 
   def value(%Fraction{a: a, b: b}) do
-    a/b
+    a / b
   end
 
   def add(%Fraction{a: a1, b: b1}, %Fraction{a: a2, b: b2}) do

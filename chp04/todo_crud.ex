@@ -27,8 +27,7 @@ defmodule TodoList do
 
   def entries(todo_list, date) do
     todo_list.entries
-    |> Stream.filter(fn {_, entry} -> entry.date == date end)
-    |> Enum.map(fn {_, entry} -> entry end)
+    |> Enum.flat_map(fn {_, entry} -> if entry.date == date, do: entry, else: [] end)
   end
 
   def update_entry(todo_list, entry_id, updater_fun) do
@@ -55,11 +54,7 @@ defmodule TodoList do
   def delete_entry(todo_list, func) do
     todo_list.entries
     |> Enum.reduce(todo_list, fn {id, entry}, acc ->
-      if func.(entry) do
-        pop_in(acc.entries[id]) |> elem(1)
-      else
-        acc
-      end
+      if func.(entry), do: pop_in(acc.entries[id]) |> elem(1), else: acc
     end)
   end
 end
